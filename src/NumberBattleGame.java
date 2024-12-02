@@ -14,7 +14,7 @@ public class NumberBattleGame {
         boolean win = false;
         boolean defeat = false;
 
-        byte playerChoice = -1;
+        byte playerChoice;
 
         String ascii = """
                  _   _                 _                 ____        _   _   _     \s
@@ -28,10 +28,10 @@ public class NumberBattleGame {
 
         while (!win && !defeat) {
             do {
-                System.out.println("\nPlayer's turn.\nChoose your attack:");
                 System.out.println("1. Light (80% success, 10 damage)");
                 System.out.println("2. Medium (50% success, 20 damage)");
                 System.out.println("3. Heavy (30% success, 40 damage)");
+                System.out.print("Choose your attack: ");
 
                 if (sc.hasNextByte()) {
                     playerChoice = sc.nextByte();
@@ -46,45 +46,42 @@ public class NumberBattleGame {
                 }
             } while (playerChoice == -1);
 
-            boolean success = false;
-            if (!win && !defeat) {
-                switch (playerChoice) {
-                    case 1:
-                        success = generator.nextInt(1, 101) >= 20;
-                        if (success) {
-                            computerHealth -= lightAttackDamage;
-                            System.out.println("\nAttack successful! You dealt " + lightAttackDamage + " damage to the computer.\n");
-                        } else {
-                            System.out.println("\nAttack missed!\n");
-                        }
-                        break;
-                    case 2:
-                        success = generator.nextInt(1, 101) >= 50;
-                        if (success) {
-                            computerHealth -= mediumAttackDamage;
-                            System.out.println("\nAttack successful! You dealt " + mediumAttackDamage + " damage to the computer.\n");
-                        } else {
-                            System.out.println("\nAttack missed!\n");
-                        }
-                        break;
-                    case 3:
-                        success = generator.nextInt(1, 101) >= 70;
-                        if (success) {
-                            computerHealth -= heavyAttackDamage;
-                            System.out.println("\nAttack successful! You dealt " + heavyAttackDamage + " damage to the computer.\n");
-                        } else {
-                            System.out.println("\nAttack missed!\n");
-                        }
-                        break;
-                }
-                if (!(playerHealth <= 0) && !(computerHealth <= 0)) {
-                    System.out.println("Computer's health: " + computerHealth + "\nYour health: " + playerHealth);
-                }
-                win = computerHealth <= 0;
-                defeat = playerHealth <= 0;
+            boolean success;
+            switch (playerChoice) {
+                case 1:
+                    success = generator.nextInt(1, 101) >= 20;
+                    if (success) {
+                        computerHealth -= lightAttackDamage;
+                        System.out.println("\nAttack successful! You dealt " + lightAttackDamage + " damage to the computer.\n");
+                    } else {
+                        System.out.println("\nAttack missed!\n");
+                    }
+                    break;
+                case 2:
+                    success = generator.nextInt(1, 101) >= 50;
+                    if (success) {
+                        computerHealth -= mediumAttackDamage;
+                        System.out.println("\nAttack successful! You dealt " + mediumAttackDamage + " damage to the computer.\n");
+                    } else {
+                        System.out.println("\nAttack missed!\n");
+                    }
+                    break;
+                case 3:
+                    success = generator.nextInt(1, 101) >= 70;
+                    if (success) {
+                        computerHealth -= heavyAttackDamage;
+                        System.out.println("\nAttack successful! You dealt " + heavyAttackDamage + " damage to the computer.\n");
+                    } else {
+                        System.out.println("\nAttack missed!\n");
+                    }
+                    break;
             }
+            if (!(computerHealth <= 0)) {
+                System.out.println("Computer's health: " + computerHealth + "\nYour health: " + playerHealth);
+            }
+            win = computerHealth <= 0;
 
-            if (!win && !defeat) {
+            if (!win) {
                 byte computerChoice = (byte) generator.nextInt(1, 4);
                 switch (computerChoice) {
                     case 1:
@@ -118,11 +115,10 @@ public class NumberBattleGame {
                         }
                         break;
                 }
-                if (!(playerHealth <= 0) && !(computerHealth <= 0)) {
-                    System.out.println("Computer's health: " + computerHealth + "\nYour health: " + playerHealth);
+                if (!(playerHealth <= 0)) {
+                    System.out.println("Computer's health: " + computerHealth + "\nYour health: " + playerHealth + "\n");
                 }
 
-                win = computerHealth <= 0;
                 defeat = playerHealth <= 0;
             }
 
