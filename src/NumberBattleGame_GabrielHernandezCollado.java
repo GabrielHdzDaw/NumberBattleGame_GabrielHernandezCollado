@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class NumberBattleGame {
+public class NumberBattleGame_GabrielHernandezCollado {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Random generator = new Random();
